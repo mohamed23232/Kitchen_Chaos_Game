@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
 
     public event EventHandler <OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs {
-        public ClearCounter SelectedCounter;
+        public BaseCounter SelectedCounter;
     }
 
     [SerializeField] private Transform HoldingPoint;
@@ -22,7 +22,7 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
     [SerializeField] private LayerMask counterLayerMask;
 
 
-    private ClearCounter SelectedCounter = null;
+    private BaseCounter SelectedCounter = null;
     private float rotationSpeed = 12f;
     private bool isWalking = false;
     private KitchenObject KitchenObject;
@@ -71,9 +71,9 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
         float interactDistance = 2f;
 
         if(Physics.Raycast(transform.position, lastInteractDirection,out RaycastHit raycastHit, interactDistance,counterLayerMask)) {
-            if(raycastHit.collider.TryGetComponent(out ClearCounter clearCounter)) {
-                if (clearCounter != SelectedCounter) {
-                    SetSelectedCounter(clearCounter);
+            if(raycastHit.collider.TryGetComponent(out BaseCounter Counter)) {
+                if (Counter != SelectedCounter) {
+                    SetSelectedCounter(Counter);
                 }
             }
             else {
@@ -130,7 +130,7 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
         //transform.forward = -movementDir;
         transform.forward = Vector3.Slerp(transform.forward, -movementDir, Time.deltaTime * rotationSpeed);
     }
-    private void SetSelectedCounter(ClearCounter clearCounter) {
+    private void SetSelectedCounter(BaseCounter clearCounter) {
         SelectedCounter = clearCounter;
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
             SelectedCounter = SelectedCounter
@@ -146,15 +146,15 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
     }
 
     public KitchenObject GetKitchenObject() {
-        return this.KitchenObject;
+        return KitchenObject;
     }
 
     public void ClearKitchenObject() {
-        this.KitchenObject = null;
+        KitchenObject = null;
     }
 
     public bool HasKitchenObject() {
-        return this.KitchenObject != null;
+        return KitchenObject != null;
     }
 
 }

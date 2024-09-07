@@ -3,44 +3,34 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour,IKitchenObjectHolder
+public class ClearCounter : BaseCounter
 {
     [SerializeField] private KitchenObject_SO KitchenObjectSO;
-    [SerializeField] private Transform TopPoint;
-
-
-    private KitchenObject KitchenObject;
 
     
 
-    public void Interact(PlayerScript player) {
-        if (KitchenObject == null) {
-            Transform KitchenObjectSOTransform = Instantiate(KitchenObjectSO.prefab, TopPoint);
-            KitchenObjectSOTransform.GetComponent<KitchenObject>().SetKitchenObjectHolder(this);
+    public override void Interact(PlayerScript player) {
+        if (!HasKitchenObject()) {
+            //there is no object in the counter
+            if (player.HasKitchenObject()) {
+                //player has an object
+                player.GetKitchenObject().SetKitchenObjectHolder(this);
+            }
+            else {
+                //player has no object
+            }
         }
         else {
-            KitchenObject.SetKitchenObjectHolder(player);
+            //there is an object in the counter
+            if (player.HasKitchenObject()) {
+                //player has an object
+            }
+            else {
+                //player has no object
+                this.GetKitchenObject().SetKitchenObjectHolder(player);
+            }
         }
-    }
 
-    public Transform GetHoldingPoint() {
-        return TopPoint;
-    }
-
-    public void SetKitchenObject(KitchenObject kitchenObject) {
-        this.KitchenObject = kitchenObject;
-    }
-
-    public KitchenObject GetKitchenObject() {
-        return this.KitchenObject;
-    }
-
-    public void ClearKitchenObject() {
-        this.KitchenObject = null;
-    }
-
-    public bool HasKitchenObject() {
-        return this.KitchenObject != null;
     }
 
 }

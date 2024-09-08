@@ -10,6 +10,9 @@ public abstract class BaseCounter : MonoBehaviour, IKitchenObjectHolder {
     private KitchenObject KitchenObject;
 
     public abstract void Interact(PlayerScript player);
+    public virtual void InteractAlternate(PlayerScript player) { }
+
+
     public Transform GetHoldingPoint() {
         return TopPoint;
     }

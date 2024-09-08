@@ -24,9 +24,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Trans",
+                    "name": "InteractAlternate",
                     "type": "Button",
-                    "id": "5547e3a0-5e93-45ce-8cc7-c4c6f08f51d6",
+                    "id": "71e87517-3427-433c-a16d-9488c7eb4c1d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -157,12 +157,12 @@
                 },
                 {
                     "name": "",
-                    "id": "cad4b69a-ff80-46b3-9ca4-7c07c00219fd",
-                    "path": "<Keyboard>/t",
+                    "id": "5b1f413e-ed7b-4d90-9feb-a01c2c61a4e1",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Trans",
+                    "action": "InteractAlternate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

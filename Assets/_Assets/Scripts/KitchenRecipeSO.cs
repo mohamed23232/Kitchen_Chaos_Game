@@ -7,4 +7,5 @@ public class KitchenRecipeSO : ScriptableObject
 {
     public KitchenObject_SO input;
     public KitchenObject_SO output;
+    public int maxCutCounter;
 }

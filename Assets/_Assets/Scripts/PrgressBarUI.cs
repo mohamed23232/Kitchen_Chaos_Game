@@ -7,17 +7,21 @@ using static UnityEditor.Rendering.CameraUI;
 using UnityEngine.Windows;
 public class PrgressBarUI : MonoBehaviour
 {
-    [SerializeField] private CuttingCounter cuttingCounter;
+    [SerializeField] private GameObject Counter;
     [SerializeField] private Image progressBar;
 
+    private IHasProgress hasProgress;
+
     public void Start() {
-        cuttingCounter.OnprogressBarChange += CuttingCounter_OnprogressBarChange;
+        hasProgress = Counter.GetComponent<IHasProgress>();
+        hasProgress.OnprogressBarChange += HasProgress_OnprogressBarChange;
         progressBar.fillAmount = 0f;
         hide();
     }
 
-    private void CuttingCounter_OnprogressBarChange(object sender, CuttingCounter.ProgressBarEventArgs e) {
+    private void HasProgress_OnprogressBarChange(object sender, IHasProgress.ProgressBarEventArgs e) {
         progressBar.fillAmount = e.progress;
+        progressBar.color = e.color;
         if (progressBar.fillAmount == 0f || progressBar.fillAmount == 1f) {
             hide();
         }

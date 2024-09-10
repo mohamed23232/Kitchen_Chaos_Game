@@ -4,14 +4,12 @@ using UnityEngine;
 using System;
 using UnityEngine.Windows;
 
-public class CuttingCounter : BaseCounter {
+public class CuttingCounter : BaseCounter,IHasProgress {
     [SerializeField] private KitchenRecipeSO[] cuttingRecipes;
 
     public event EventHandler OnplayerCutObject;
-    public event EventHandler<ProgressBarEventArgs> OnprogressBarChange;
-    public class ProgressBarEventArgs : EventArgs {
-        public float progress;
-    }
+    public event EventHandler<IHasProgress.ProgressBarEventArgs> OnprogressBarChange;
+
 
 
 
@@ -22,8 +20,9 @@ public class CuttingCounter : BaseCounter {
     }
 
     public void ProgressBarChange() {
-        OnprogressBarChange?.Invoke(this, new ProgressBarEventArgs {
-            progress = (float)cut_cnt / GetRecipe(GetKitchenObject().GetKitchenObjectSO()).maxCutCounter
+        OnprogressBarChange?.Invoke(this, new IHasProgress.ProgressBarEventArgs {
+            progress = (float)cut_cnt / GetRecipe(GetKitchenObject().GetKitchenObjectSO()).maxCutCounter,
+            color = Color.green
         });
     }
 

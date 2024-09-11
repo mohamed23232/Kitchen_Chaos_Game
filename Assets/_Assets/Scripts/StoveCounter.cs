@@ -103,10 +103,19 @@ public class StoveCounter : BaseCounter,IHasProgress {
             //there is an object in the counter
             if (player.HasKitchenObject()) {
                 //player has an object
+                if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject)) {
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO())) {
+                        GetKitchenObject().Destroy();
+                    }
+                }
+                state = State.Empty;
+                OnState(state);
+                ProgressBarChange(0, burningRecipeSO.MaxburningTimer, Color.green);
+
             }
             else {
                 //player has no object
-                    this.GetKitchenObject().SetKitchenObjectHolder(player);
+                this.GetKitchenObject().SetKitchenObjectHolder(player);
                 state = State.Empty;
                 OnState(state);
                 ProgressBarChange(0, burningRecipeSO.MaxburningTimer, Color.green);

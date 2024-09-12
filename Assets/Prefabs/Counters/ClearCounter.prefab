@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4098a9d0d9145b4ca02f1b483bfe821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KitchenObjectSO: {fileID: 11400000, guid: 0c3454b32cf4af74a938a0824bf10d8f, type: 2}
   TopPoint: {fileID: 7851628111986016856}
+  KitchenObjectSO: {fileID: 11400000, guid: 0c3454b32cf4af74a938a0824bf10d8f, type: 2}
 --- !u!4 &5839635394197527102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6872612247805673252, guid: 8ea3cb8ca4f322a40b5254e43336070a,
@@ -212,17 +212,17 @@ PrefabInstance:
     - target: {fileID: 4589716710238282923, guid: 0004cb1e11ad014419b943c7da960724,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 4589716710238282923, guid: 0004cb1e11ad014419b943c7da960724,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.1
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 4589716710238282923, guid: 0004cb1e11ad014419b943c7da960724,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.1
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 4589716710238282923, guid: 0004cb1e11ad014419b943c7da960724,
         type: 3}

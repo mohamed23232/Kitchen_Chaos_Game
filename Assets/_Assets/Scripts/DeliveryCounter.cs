@@ -9,7 +9,10 @@ public class DeliveryCounter : BaseCounter
             //player has an object
             if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject)) {
                 //only plate can be delivered
-                player.GetKitchenObject().Destroy();
+                if (DeliveryManager.Instance.Delivery(plateKitchenObject)) {
+                    //delivered
+                    player.GetKitchenObject().Destroy();
+                }
             }
         }
     }

@@ -7,6 +7,5 @@ public class IconTemplateUI : MonoBehaviour
     [SerializeField] private Image image;
     public void SetKitchenObjectSOImage(KitchenObject_SO kitchenObject_SO) {
         image.sprite = kitchenObject_SO.sprite;
-        Debug.Log("SetKitchenObjectSOImage");
     }
 }

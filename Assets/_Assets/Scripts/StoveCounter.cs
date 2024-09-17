@@ -5,6 +5,7 @@ using System;
 public class StoveCounter : BaseCounter,IHasProgress {
 
     public event EventHandler<IHasProgress.ProgressBarEventArgs> OnprogressBarChange;
+    public event EventHandler<OnStateChangedEventArgs> OnAnyStateChanged;
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
     public class OnStateChangedEventArgs : EventArgs {
         public State state;
@@ -30,6 +31,7 @@ public class StoveCounter : BaseCounter,IHasProgress {
 
     public void OnState(State state) {
         OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
+        OnAnyStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = state });
     }
 
     public void ProgressBarChange(float timer,float maxTimer,Color color) {

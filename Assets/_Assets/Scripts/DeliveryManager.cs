@@ -7,6 +7,8 @@ public class DeliveryManager : MonoBehaviour
 {
     public event EventHandler OnRecipeSpawn;
     public event EventHandler OnRecipeDelivered;
+    public event EventHandler OnRecipeSuccess;
+    public event EventHandler OnRecipeFail;
 
     [SerializeField] private ALLRecipesSO allRecipes;
     
@@ -42,6 +44,12 @@ public class DeliveryManager : MonoBehaviour
     private void RecipeDelivered() {
         OnRecipeDelivered?.Invoke(this, EventArgs.Empty);
     }
+    private void RecipeSuccess() {
+        OnRecipeSuccess?.Invoke(this, EventArgs.Empty);
+    }
+    private void RecipeFail() {
+        OnRecipeFail?.Invoke(this, EventArgs.Empty);
+    }
 
 
     private void SpawnRecipe() {
@@ -70,11 +78,13 @@ public class DeliveryManager : MonoBehaviour
                 if (plateContainsAllObjects) {
                     WaitingrecipesList.RemoveAt(i);
                     RecipeDelivered();
+                    RecipeSuccess();
                     return true;
                 }
             }
         }
         Debug.Log("Recipe Not Delivered");
+        RecipeFail();
         return false;
     }
 

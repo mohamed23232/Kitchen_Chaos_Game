@@ -7,6 +7,9 @@ using UnityEngine.Windows;
 public class CuttingCounter : BaseCounter,IHasProgress {
     [SerializeField] private KitchenRecipeSO[] cuttingRecipes;
 
+
+
+    public static event EventHandler OnAnyCuttingCounter;
     public event EventHandler OnplayerCutObject;
     public event EventHandler<IHasProgress.ProgressBarEventArgs> OnprogressBarChange;
 
@@ -17,6 +20,7 @@ public class CuttingCounter : BaseCounter,IHasProgress {
     private bool cutCompleted = false;
     public void Cut(PlayerScript player) {
         OnplayerCutObject?.Invoke(this, EventArgs.Empty);
+        OnAnyCuttingCounter?.Invoke(this, EventArgs.Empty);
     }
 
     public void ProgressBarChange() {

@@ -11,6 +11,8 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
 
     public static PlayerScript Instance { get; private set;}
 
+    public event EventHandler OnPickUp;
+    //public event EventHandler OnWalk;
     public event EventHandler <OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs {
         public BaseCounter SelectedCounter;
@@ -111,6 +113,7 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
 
             if (canmove) {
                 movementDir = xDirection;
+
             }
 
             else {
@@ -152,6 +155,9 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
 
     public void SetKitchenObject(KitchenObject kitchenObject) {
         this.KitchenObject = kitchenObject;
+        if(kitchenObject != null) {
+            OnPickUp?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject() {

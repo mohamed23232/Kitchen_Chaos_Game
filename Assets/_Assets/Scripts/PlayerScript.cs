@@ -44,12 +44,14 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
     }
 
     private void Input_OnInteractAlternateAction(object sender, EventArgs e) {
+        if (!GameHandler.Instance.IsPlaying()) return;
         if (SelectedCounter != null) {
             SelectedCounter.InteractAlternate(this);
         }
     }
 
     private void Input_OnInteractAction(object sender, System.EventArgs e) {
+        if (!GameHandler.Instance.IsPlaying()) return;
         if (SelectedCounter != null) {
             SelectedCounter.Interact(this);
         }

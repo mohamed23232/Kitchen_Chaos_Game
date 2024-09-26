@@ -18,6 +18,10 @@ public abstract class BaseCounter : MonoBehaviour, IKitchenObjectHolder {
         return TopPoint;
     }
 
+    public static void ResetDrop() {
+        OnDrop = null;
+    }
+
     public void SetKitchenObject(KitchenObject kitchenObject) {
         this.KitchenObject = kitchenObject;
         if (kitchenObject != null) {

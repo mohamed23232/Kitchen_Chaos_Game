@@ -6,6 +6,9 @@ public class TrashCounter : BaseCounter {
 
     public static event EventHandler OnTrash;
 
+    public static void ResetTrash() {
+        OnTrash = null;
+    }
     public override void Interact(PlayerScript player) {
         if (player.HasKitchenObject()) {
             //player has an object

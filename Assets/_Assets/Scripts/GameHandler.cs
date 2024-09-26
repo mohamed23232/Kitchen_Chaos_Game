@@ -5,6 +5,8 @@ using System;
 public class GameHandler : MonoBehaviour {
     public static GameHandler Instance { get; private set; }
 
+    public event EventHandler OnGamePaused;
+    public event EventHandler OnGameResumed;
     public event EventHandler<OnGameStateChangedEventArgs> OnGameStateChanged;
     public class OnGameStateChangedEventArgs : EventArgs {
         public State state;
@@ -22,9 +24,20 @@ public class GameHandler : MonoBehaviour {
     private float playingTimer;
     private float playingTimerMax = 20f;
 
+    private bool isPaused = false;
+
     private void Awake() {
         Instance = this;
         state = State.WaitingForStart;
+    }
+
+    private void Start() {
+        GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+    }
+
+    private void GameInput_OnPauseAction(object sender, EventArgs e) {
+        if (state == State.Playing)
+            ToggleGamePause();
     }
 
     private void Update() {
@@ -73,5 +86,17 @@ public class GameHandler : MonoBehaviour {
     }
     public bool IsGameOver() {
         return state == State.GameOver;
+    }
+
+    public void ToggleGamePause() {
+        isPaused = !isPaused;
+        if (isPaused) {
+            Time.timeScale = 0;
+            OnGamePaused?.Invoke(this, EventArgs.Empty);
+        }
+        else {
+            Time.timeScale = 1;
+            OnGameResumed?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

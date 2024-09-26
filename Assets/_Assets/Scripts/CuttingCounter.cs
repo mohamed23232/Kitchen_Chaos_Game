@@ -23,6 +23,10 @@ public class CuttingCounter : BaseCounter,IHasProgress {
         OnAnyCuttingCounter?.Invoke(this, EventArgs.Empty);
     }
 
+    public static void ResetCuttingCounter() {
+        OnAnyCuttingCounter = null;
+    }
+
     public void ProgressBarChange() {
         OnprogressBarChange?.Invoke(this, new IHasProgress.ProgressBarEventArgs {
             progress = (float)cut_cnt / GetRecipe(GetKitchenObject().GetKitchenObjectSO()).maxCutCounter,

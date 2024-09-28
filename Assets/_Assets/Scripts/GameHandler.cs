@@ -73,7 +73,6 @@ public class GameHandler : MonoBehaviour {
             case State.GameOver:
                 break;
         }
-        Debug.Log(state);
     }
     public bool IsPlaying() {
         return state == State.Playing;

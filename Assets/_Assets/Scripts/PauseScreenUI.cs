@@ -4,16 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PauseScreenUI : MonoBehaviour
 {
+    public static PauseScreenUI Instance { get; private set; }
+
     [SerializeField] private Button MainMenuButton;
     [SerializeField] private Button ResumeButton;
-
+    [SerializeField] private Button OptionsButton;
 
     private void Awake() {
+        Instance = this;
         MainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);
         });
         ResumeButton.onClick.AddListener(() => {
             GameHandler.Instance.ToggleGamePause();
+        });
+        OptionsButton.onClick.AddListener(() => {
+            OptionsUI.Instance.Show();
+            Hide();
         });
     }
 
@@ -31,7 +38,7 @@ public class PauseScreenUI : MonoBehaviour
         Show();
     }
 
-    private void Show() {
+    public void Show() {
         gameObject.SetActive(true);
     }
     private void Hide() {

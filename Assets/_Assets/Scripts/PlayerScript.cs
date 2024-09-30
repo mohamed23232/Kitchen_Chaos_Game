@@ -111,7 +111,7 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
         if (!canmove) {
             // try to move in x direction
             Vector3 xDirection = new Vector3(movementDir.x, 0f, 0f).normalized;
-            canmove = movementDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, xDirection, moveDistance);
+            canmove = (movementDir.x < -.5f || movementDir.x > +.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, xDirection, moveDistance);
 
             if (canmove) {
                 movementDir = xDirection;
@@ -119,9 +119,9 @@ public class PlayerScript : MonoBehaviour,IKitchenObjectHolder {
             }
 
             else {
-
+                // try to move in z direction
                 Vector3 zDirection = new Vector3(0f, 0f, movementDir.z).normalized;
-                canmove = movementDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, zDirection, moveDistance);
+                canmove = (movementDir.z < -.5f || movementDir.z > +.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHight, playerRadius, zDirection, moveDistance);
 
                 if (canmove) {
                     movementDir = zDirection;

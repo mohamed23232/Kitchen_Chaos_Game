@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class OptionsUI : MonoBehaviour
 {
     public static OptionsUI Instance { get; private set; }
@@ -16,6 +17,8 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Button MoveRightButton;
     [SerializeField] private Button InteractButton;
     [SerializeField] private Button InteractAlternativeButton;
+    [SerializeField] private Button GamePadInteractButton;
+    [SerializeField] private Button GamePadInteractAlternativeButton;
     [SerializeField] private TextMeshProUGUI SoundEffectsText;
     [SerializeField] private TextMeshProUGUI MusicText;
     [SerializeField] private TextMeshProUGUI MoveUpText;
@@ -24,9 +27,12 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI MoveRightText;
     [SerializeField] private TextMeshProUGUI InteractText;
     [SerializeField] private TextMeshProUGUI InteractAlternativeText;
+    [SerializeField] private TextMeshProUGUI GamePadInteractText;
+    [SerializeField] private TextMeshProUGUI GamePadInteractAlternativeText;
 
     [SerializeField] private Transform PressAnyKey;
 
+    private Action OnCloseAction;
 
     private void Awake() {
         Instance = this;
@@ -44,7 +50,7 @@ public class OptionsUI : MonoBehaviour
         });
         CloseButton.onClick.AddListener(() => {
             Hide();
-            PauseScreenUI.Instance.Show();
+            OnCloseAction();
         });
         MoveUpButton.onClick.AddListener(() => {
             RebindKeys(GameInput.Bindings.MoveUp);
@@ -63,6 +69,12 @@ public class OptionsUI : MonoBehaviour
         });
         InteractAlternativeButton.onClick.AddListener(() => {
             RebindKeys(GameInput.Bindings.InteractAlternate);
+        });
+        GamePadInteractButton.onClick.AddListener(() => {
+            RebindKeys(GameInput.Bindings.GamePadInteract);
+        });
+        GamePadInteractAlternativeButton.onClick.AddListener(() => {
+            RebindKeys(GameInput.Bindings.GamePadInteractAlternate);
         });
     }
     private void Start() {
@@ -90,9 +102,15 @@ public class OptionsUI : MonoBehaviour
         MoveRightText.text = GameInput.Instance.GetBindingText(GameInput.Bindings.MoveRight);
         InteractText.text = GameInput.Instance.GetBindingText(GameInput.Bindings.Interact);
         InteractAlternativeText.text = GameInput.Instance.GetBindingText(GameInput.Bindings.InteractAlternate);
+        GamePadInteractText.text = GameInput.Instance.GetBindingText(GameInput.Bindings.GamePadInteract);
+        GamePadInteractAlternativeText.text = GameInput.Instance.GetBindingText(GameInput.Bindings.GamePadInteractAlternate);
     }
 
-    public void Show() { gameObject.SetActive(true); }
+    public void Show(Action OnClose) {
+        this.OnCloseAction = OnClose;
+        gameObject.SetActive(true); 
+        SoundEffectsButton.Select();
+    }
     private void Hide() { gameObject.SetActive(false); }
 
     private void ShowPressAnyKey() {

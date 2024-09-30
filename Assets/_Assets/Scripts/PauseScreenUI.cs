@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class PauseScreenUI : MonoBehaviour
     [SerializeField] private Button ResumeButton;
     [SerializeField] private Button OptionsButton;
 
+
     private void Awake() {
         Instance = this;
         MainMenuButton.onClick.AddListener(() => {
@@ -19,7 +21,7 @@ public class PauseScreenUI : MonoBehaviour
             GameHandler.Instance.ToggleGamePause();
         });
         OptionsButton.onClick.AddListener(() => {
-            OptionsUI.Instance.Show();
+            OptionsUI.Instance.Show(Show);
             Hide();
         });
     }
@@ -40,6 +42,7 @@ public class PauseScreenUI : MonoBehaviour
 
     public void Show() {
         gameObject.SetActive(true);
+        ResumeButton.Select();
     }
     private void Hide() {
         gameObject.SetActive(false);

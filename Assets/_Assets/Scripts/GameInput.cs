@@ -22,6 +22,8 @@ public class GameInput : MonoBehaviour {
         MoveRight,
         Interact,
         InteractAlternate,
+        GamePadInteract,
+        GamePadInteractAlternate
     }
 
     private void Awake() {
@@ -73,6 +75,10 @@ public class GameInput : MonoBehaviour {
                 return playerInputActions.Player.Interact.bindings[0].ToDisplayString();
             case Bindings.InteractAlternate:
                 return playerInputActions.Player.InteractAlternate.bindings[0].ToDisplayString();
+            case Bindings.GamePadInteract:
+                return playerInputActions.Player.Interact.bindings[1].ToDisplayString();
+            case Bindings.GamePadInteractAlternate:
+                return playerInputActions.Player.InteractAlternate.bindings[1].ToDisplayString();
             case Bindings.MoveUp:
                 return playerInputActions.Player.Move.bindings[1].ToDisplayString();
             case Bindings.MoveDown:
@@ -98,6 +104,14 @@ public class GameInput : MonoBehaviour {
             case Bindings.InteractAlternate:
                 inputAction = playerInputActions.Player.InteractAlternate;
                 bindingIndex = 0;
+                break;
+            case Bindings.GamePadInteract:
+                inputAction = playerInputActions.Player.Interact;
+                bindingIndex = 1;
+                break;
+            case Bindings.GamePadInteractAlternate:
+                inputAction = playerInputActions.Player.InteractAlternate;
+                bindingIndex = 1;
                 break;
             case Bindings.MoveUp:
                 inputAction = playerInputActions.Player.Move;

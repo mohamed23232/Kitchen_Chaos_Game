@@ -86,7 +86,6 @@ public class DeliveryManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Recipe Not Delivered");
         RecipeFail();
         return false;
     }

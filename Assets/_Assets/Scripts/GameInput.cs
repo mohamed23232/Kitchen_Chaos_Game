@@ -12,6 +12,7 @@ public class GameInput : MonoBehaviour {
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnPauseAction;
+    public event EventHandler OnRebindAction;
 
     private PlayerInputActions playerInputActions;
 
@@ -23,7 +24,10 @@ public class GameInput : MonoBehaviour {
         Interact,
         InteractAlternate,
         GamePadInteract,
-        GamePadInteractAlternate
+        GamePadInteractAlternate,
+        Pause,
+        GamePadPause,
+        GamePadMove
     }
 
     private void Awake() {
@@ -87,6 +91,12 @@ public class GameInput : MonoBehaviour {
                 return playerInputActions.Player.Move.bindings[3].ToDisplayString();
             case Bindings.MoveRight:
                 return playerInputActions.Player.Move.bindings[4].ToDisplayString();
+            case Bindings.Pause:
+                return playerInputActions.Player.Pause.bindings[0].ToDisplayString();
+            case Bindings.GamePadPause:
+                return playerInputActions.Player.Pause.bindings[1].ToDisplayString();
+            case Bindings.GamePadMove:
+                return playerInputActions.Player.Move.bindings[5].ToDisplayString();
         }
     }
 
@@ -138,6 +148,8 @@ public class GameInput : MonoBehaviour {
             playerInputActions.Player.Enable();
             action();
             PlayerPrefs.SetString(BINDING_SCHEME, playerInputActions.SaveBindingOverridesAsJson());
+            PlayerPrefs.Save();
+            OnRebindAction?.Invoke(this, EventArgs.Empty);
         }).Start();
     }
 

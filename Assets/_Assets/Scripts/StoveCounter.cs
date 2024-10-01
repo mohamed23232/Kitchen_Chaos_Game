@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class StoveCounter : BaseCounter,IHasProgress {
+using static IHasWarning;
+public class StoveCounter : BaseCounter,IHasProgress,IHasWarning {
 
     public event EventHandler<IHasProgress.ProgressBarEventArgs> OnprogressBarChange;
     public event EventHandler<OnStateChangedEventArgs> OnAnyStateChanged;
     public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
+
+    public event EventHandler<OnWarningEventArgs> OnWarning;
+
     public class OnStateChangedEventArgs : EventArgs {
         public State state;
     }
@@ -40,6 +44,12 @@ public class StoveCounter : BaseCounter,IHasProgress {
             , color = color
         });
     }
+    public void Burning(State state) {
+        OnWarning?.Invoke(this, new OnWarningEventArgs {
+            state = state,
+            Empty = this.HasKitchenObject()
+        });
+    }
 
 
     private void Start() {
@@ -55,6 +65,7 @@ public class StoveCounter : BaseCounter,IHasProgress {
                 case State.Cooking:
                     fryingTimer += Time.deltaTime;
                     ProgressBarChange(fryingTimer, fryingRecipeSO.MaxfryingTimer,Color.green);
+                    Burning(state);
                     if (fryingTimer > fryingRecipeSO.MaxfryingTimer) {
                         //frying is done
                         GetKitchenObject().Destroy();
@@ -68,6 +79,7 @@ public class StoveCounter : BaseCounter,IHasProgress {
                 case State.Cooked:
                     burningTimer += Time.deltaTime;
                     ProgressBarChange(burningTimer,burningRecipeSO.MaxburningTimer,Color.red);
+                    Burning(state);
                     if (burningTimer > burningRecipeSO.MaxburningTimer) {
                         //burning is done
                         GetKitchenObject().Destroy();
@@ -94,6 +106,7 @@ public class StoveCounter : BaseCounter,IHasProgress {
                     state = State.Cooking;
                     fryingTimer = 0f;
                     ProgressBarChange(fryingTimer, fryingRecipeSO.MaxfryingTimer, Color.green);
+                    Burning(state);
                     OnState(state);
                 }
             }
@@ -112,6 +125,7 @@ public class StoveCounter : BaseCounter,IHasProgress {
                 }
                 state = State.Empty;
                 OnState(state);
+                Burning(state);
                 ProgressBarChange(0, burningRecipeSO.MaxburningTimer, Color.green);
 
             }
@@ -120,6 +134,7 @@ public class StoveCounter : BaseCounter,IHasProgress {
                 this.GetKitchenObject().SetKitchenObjectHolder(player);
                 state = State.Empty;
                 OnState(state);
+                Burning(state);
                 ProgressBarChange(0, burningRecipeSO.MaxburningTimer, Color.green);
             }
         }
@@ -145,5 +160,6 @@ public class StoveCounter : BaseCounter,IHasProgress {
         return null;
     }
 
-    
+
+
 }

@@ -38,7 +38,7 @@ public class PlatesCounter : BaseCounter {
         spwanPlatesTime += Time.deltaTime;
         if(spwanPlatesTime > spwanPlatesTimeMax) {
             spwanPlatesTime = 0f;
-            if(platesCount < platesCountMax) {
+            if(platesCount < platesCountMax && GameHandler.Instance.IsPlaying()) {
                 platesCount++;
                 AddPlate();
             }

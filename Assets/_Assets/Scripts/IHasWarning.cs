@@ -8,6 +8,5 @@ public interface IHasWarning
 
     public class OnWarningEventArgs : EventArgs {
         public StoveCounter.State state;
-        public bool Empty;
     }
 }

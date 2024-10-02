@@ -8,6 +8,9 @@ public class BurningWarningUI : MonoBehaviour
     [SerializeField] private GameObject stoveCounter;
 
     private IHasWarning hasWarning;
+    
+    private float warningTime;
+    private float warningTimeLimit = 0.5f;
     private void Start() {
         hasWarning = stoveCounter.GetComponent<IHasWarning>();
         hasWarning.OnWarning += HasWarning_OnWarning;
@@ -15,9 +18,13 @@ public class BurningWarningUI : MonoBehaviour
     }
 
     private void HasWarning_OnWarning(object sender, IHasWarning. OnWarningEventArgs e) {
-        Debug.Log(e.Empty);
         if (e.state == StoveCounter.State.Cooked) {
             Show();
+            warningTime += Time.deltaTime;
+            if (warningTime > warningTimeLimit) {
+                warningTime = 0f;
+                SoundManager.Instance.PlaySoundWarning(stoveCounter.transform.position);
+            }
         }
         else {
             Hide();

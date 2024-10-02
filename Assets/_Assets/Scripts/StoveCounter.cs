@@ -47,7 +47,6 @@ public class StoveCounter : BaseCounter,IHasProgress,IHasWarning {
     public void Burning(State state) {
         OnWarning?.Invoke(this, new OnWarningEventArgs {
             state = state,
-            Empty = this.HasKitchenObject()
         });
     }
 

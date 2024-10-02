@@ -27,7 +27,7 @@ public class GameStartCountDownUI : MonoBehaviour
         countDownText.text = countDown.ToString("#");
         if (countDown != previousCountDown) {
             animator.SetTrigger(NUMBER_POPUP);
-            SoundManager.Instance.playSoundCountDown();
+            SoundManager.Instance.PlaySoundCountDown();
             previousCountDown = countDown;
         }
     }
